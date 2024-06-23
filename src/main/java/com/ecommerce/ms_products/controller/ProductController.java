@@ -27,7 +27,7 @@ import static com.ecommerce.ms_products.constants.GeneralConstants.DEFAULT_PAGE_
 import static com.ecommerce.ms_products.constants.GeneralConstants.ID_IN_PATH;
 
 @RestController
-@RequestMapping
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
