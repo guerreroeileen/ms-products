@@ -6,26 +6,30 @@ import com.ecommerce.ms_products.mapper.ProductMapper;
 import com.ecommerce.ms_products.model.Product;
 import com.ecommerce.ms_products.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class ProductService {
 
     @Autowired
     private ProductRepository productRepository;
-
-
     @Autowired
     private ProductMapper productMapper;
 
-    public List<ProductDTO> getAllProducts() {
-        return productRepository.findAll().stream()
-                .map(productMapper::toDto)
-                .collect(Collectors.toList());
+    public Page<ProductDTO> getAllProducts(Integer page, Integer size, String productName, UUID categoryId, String sortDirection) {
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Sort sort = Sort.by(direction, "price");
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Product> productsPage = productRepository.findByNameAndCategoryId(productName, categoryId, pageable);
+
+        return productsPage.map(productMapper::toDto);
     }
 
     public ProductDTO getProductById(UUID id) {

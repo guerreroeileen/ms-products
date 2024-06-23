@@ -19,8 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.UUID;
 
+import static com.ecommerce.ms_products.constants.GeneralConstants.DEFAULT_PAGE_NUMBER;
+import static com.ecommerce.ms_products.constants.GeneralConstants.DEFAULT_PAGE_SIZE;
+import static com.ecommerce.ms_products.constants.GeneralConstants.ID_IN_PATH;
+
 @RestController
-@RequestMapping
+@RequestMapping("/category")
 public class CategoryController {
 
     @Autowired
@@ -28,14 +32,14 @@ public class CategoryController {
 
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> getAllCategories(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = DEFAULT_PAGE_NUMBER) int page,
+            @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int size,
             @RequestParam(required = false) String name
     ) {
         return ResponseEntity.ok(categoryService.getAllCategories(name, page, size));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(ID_IN_PATH)
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable UUID id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
@@ -45,12 +49,12 @@ public class CategoryController {
         return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping(ID_IN_PATH)
     public ResponseEntity<CategoryDTO> updateCategory(@PathVariable UUID id, @RequestBody CategoryDTO categoryDTO) {
         return ResponseEntity.ok(categoryService.updateCategory(id, categoryDTO));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping(ID_IN_PATH)
     public ResponseEntity<Void> deleteCategory(@PathVariable UUID id) {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
