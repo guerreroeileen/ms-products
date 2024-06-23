@@ -1,6 +1,6 @@
 package com.ecommerce.ms_products.constants;
 
-public class GeneralConstants {
+public final class GeneralConstants {
 
     public static final String DEFAULT_PAGE_NUMBER = "0";
     public static final String DEFAULT_PAGE_SIZE = "10";

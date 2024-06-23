@@ -6,6 +6,7 @@ import com.ecommerce.ms_products.mapper.CategoryMapper;
 import com.ecommerce.ms_products.model.Category;
 import com.ecommerce.ms_products.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
+    @Cacheable("getAllCategories")
     public List<CategoryDTO> getAllCategories(String name, Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Category> categoryPage;
@@ -37,6 +39,7 @@ public class CategoryService {
                 .collect(Collectors.toList());
     }
 
+    @Cacheable("getCategoryById")
     public CategoryDTO getCategoryById(UUID id) {
         return categoryRepository.findById(id)
                 .map(categoryMapper::toDto)
