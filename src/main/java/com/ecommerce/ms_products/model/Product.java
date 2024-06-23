@@ -36,8 +36,8 @@ public class Product extends Auditable<String> {
     @Column(name = "stock", nullable = false)
     private Integer stock;
 
-    @Column(name = "active", columnDefinition = "true")
-    private Boolean active;
+    @Column(name = "active", nullable = false)
+    private Boolean active = true;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "category_id")

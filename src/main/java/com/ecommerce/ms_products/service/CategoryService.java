@@ -6,6 +6,7 @@ import com.ecommerce.ms_products.mapper.CategoryMapper;
 import com.ecommerce.ms_products.model.Category;
 import com.ecommerce.ms_products.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public class CategoryService {
     @Autowired
     private CategoryMapper categoryMapper;
 
-    public List<CategoryDTO> getAllCategories() {
-        return categoryRepository.findAll().stream()
+    public List<CategoryDTO> getAllCategories(String name, Integer page, Integer size) {
+        return categoryRepository.findByNameContainingIgnoreCase(name, Pageable.ofSize(size).withPage(page)).stream()
                 .map(categoryMapper::toDto)
                 .collect(Collectors.toList());
     }
