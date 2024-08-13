@@ -46,7 +46,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
-        return new ResponseEntity(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
     }
 
     @PutMapping(ID_IN_PATH)
