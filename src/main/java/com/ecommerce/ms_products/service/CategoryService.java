@@ -5,7 +5,7 @@ import com.ecommerce.ms_products.exceptions.ResourceNotFoundException;
 import com.ecommerce.ms_products.mapper.CategoryMapper;
 import com.ecommerce.ms_products.model.Category;
 import com.ecommerce.ms_products.repository.CategoryRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,13 +17,11 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryService {
 
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
-    private CategoryMapper categoryMapper;
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Cacheable("getAllCategories")
     public List<CategoryDTO> getAllCategories(String name, Integer page, Integer size) {

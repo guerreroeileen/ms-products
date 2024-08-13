@@ -3,7 +3,7 @@ package com.ecommerce.ms_products.controller;
 
 import com.ecommerce.ms_products.dto.CategoryDTO;
 import com.ecommerce.ms_products.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,10 +25,10 @@ import static com.ecommerce.ms_products.constants.GeneralConstants.ID_IN_PATH;
 
 @RestController
 @RequestMapping("/category")
+@RequiredArgsConstructor
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @GetMapping
     public ResponseEntity<List<CategoryDTO>> getAllCategories(
@@ -46,7 +46,7 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
-        return new ResponseEntity(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
+        return new ResponseEntity<>(categoryService.createCategory(categoryDTO), HttpStatus.CREATED);
     }
 
     @PutMapping(ID_IN_PATH)

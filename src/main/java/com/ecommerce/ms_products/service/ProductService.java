@@ -5,7 +5,7 @@ import com.ecommerce.ms_products.exceptions.ResourceNotFoundException;
 import com.ecommerce.ms_products.mapper.ProductMapper;
 import com.ecommerce.ms_products.model.Product;
 import com.ecommerce.ms_products.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,15 +15,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+import static com.ecommerce.ms_products.constants.CacheConstants.GET_ALL_PRODUCTS;
+import static com.ecommerce.ms_products.constants.CacheConstants.GET_PRODUCT_BY_ID;
+
 @Service
+@RequiredArgsConstructor
 public class ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private ProductMapper productMapper;
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
-    @Cacheable("getAllProducts")
+    @Cacheable(GET_ALL_PRODUCTS)
     public Page<ProductDTO> getAllProducts(Integer page, Integer size, String productName, UUID categoryId, String sortDirection) {
         Sort.Direction direction = Sort.Direction.fromString(sortDirection);
         Sort sort = Sort.by(direction, "price");
@@ -34,7 +36,7 @@ public class ProductService {
         return productsPage.map(productMapper::toDto);
     }
 
-    @Cacheable("getProductById")
+    @Cacheable(GET_PRODUCT_BY_ID)
     public ProductDTO getProductById(UUID id) {
         return productRepository.findById(id)
                 .map(productMapper::toDto)

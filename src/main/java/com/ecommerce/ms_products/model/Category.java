@@ -23,7 +23,7 @@ public class Category extends Auditable<String> {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50, unique = true)
     private String name;
 
     @OneToMany(mappedBy = "category")
