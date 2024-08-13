@@ -3,11 +3,8 @@ package com.ecommerce.ms_products.controller;
 
 import com.ecommerce.ms_products.dto.ProductDTO;
 import com.ecommerce.ms_products.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,10 +25,10 @@ import static com.ecommerce.ms_products.constants.GeneralConstants.ID_IN_PATH;
 
 @RestController
 @RequestMapping("/product")
+@RequiredArgsConstructor
 public class ProductController {
 
-    @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @GetMapping
     public ResponseEntity<Page<ProductDTO>> getAllProducts(
