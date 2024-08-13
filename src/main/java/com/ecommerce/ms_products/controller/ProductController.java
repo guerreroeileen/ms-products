@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+import static com.ecommerce.ms_products.constants.GeneralConstants.ASC;
 import static com.ecommerce.ms_products.constants.GeneralConstants.DEFAULT_PAGE_NUMBER;
 import static com.ecommerce.ms_products.constants.GeneralConstants.DEFAULT_PAGE_SIZE;
 import static com.ecommerce.ms_products.constants.GeneralConstants.ID_IN_PATH;
@@ -36,7 +37,7 @@ public class ProductController {
             @RequestParam(defaultValue = DEFAULT_PAGE_SIZE) int size,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) UUID categoryId,
-            @RequestParam(defaultValue = "asc") String sortDirection) {
+            @RequestParam(defaultValue = ASC) String sortDirection) {
         return ResponseEntity.ok(productService.getAllProducts(page, size, name, categoryId, sortDirection));
     }
 
