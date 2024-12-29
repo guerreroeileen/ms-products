@@ -28,4 +28,6 @@ public class Category extends Auditable<String> {
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
+
+    private String address;
 }
