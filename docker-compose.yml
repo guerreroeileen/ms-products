@@ -25,6 +25,8 @@ services:
     image: my-app-image
     build:
       context: .
+    env_file:
+      - .env
     environment:
       DB_HOST: postgres
       DB_PORT: 5432
@@ -40,9 +42,16 @@ services:
       - redis
     networks:
       - app-network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 5s
 
 networks:
   app-network:
+    name: ms-products_app-network
     driver: bridge
 
 volumes:
