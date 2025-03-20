@@ -28,4 +28,7 @@ public class Category extends Auditable<String> {
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
+
+    @Column(name = "address", length = 80, nullable = false)
+    private String address;
 }
